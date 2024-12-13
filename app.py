@@ -70,7 +70,8 @@ def solve_optimization(df,order,capacity):
     # Menampilkan hasil optimasi
     margin = []
     for i in range(len(pn)):
-        value =  pyo.value(pn[i]) * df.Margin[i]
+        part_value = pyo.value(pn[i])
+        value =  part_value * df.Margin[i]
         margin.append(value)
         if pyo.value(pn[i]) > 0:
             st.write('<center><b><h3>Part Number: ', df.PN[i], '=', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
