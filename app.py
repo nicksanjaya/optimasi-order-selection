@@ -88,16 +88,13 @@ if uploaded_file is not None:
         
     # Input box for capacity
     capacity = st.number_input("Enter Capacity:", min_value=0)
-    pn_abc = st.number_input("Enter Part Number ABC:", min_value=0)
-    pn_def = st.number_input("Enter Part Number DEF:", min_value=0)
-    pn_ghi = st.number_input("Enter Part Number GHI:", min_value=0)
-    pn_jkl = st.number_input("Enter Part Number JKL:", min_value=0)
-    pn_mno = st.number_input("Enter Part Number MNO:", min_value=0)
+    pn_values = {}
+    for part in df.PN:
+        pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
     data = {
-    'PN' : ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
-    'Qty' : [pn_abc, pn_def, pn_ghi, pn_jkl, pn_mno]
+    'PN': part_numbers,
+    'Qty': [pn_values[part] for part in part_numbers]
     }
-    
     order  = pd.DataFrame(data)
 
 
