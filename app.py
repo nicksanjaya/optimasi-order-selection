@@ -88,6 +88,7 @@ if uploaded_file is not None:
         convert_df(df)
         margin(df)
         grading(df)
+        st.write(f'Bobot -> Quality: 40%, Pas: 30%, Cost: 30%')
         st.write(df)  
     except Exception as e:
         st.error(f"Error reading the Excel file: {e}")
