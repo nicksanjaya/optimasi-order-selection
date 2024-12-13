@@ -19,7 +19,7 @@ def upload_data():
 
 def convert_df(df):
     # Check if necessary columns exist
-    required_columns = ['PN', 'Quality', 'Pas', 'Cost']
+    required_columns = ['PN', 'Quality', 'Pas', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
             st.error(f"Missing required column: {col}")
@@ -28,6 +28,8 @@ def convert_df(df):
     df["Quality"] = df["Quality"].astype(int)
     df["Pas"] = df["Pas"].astype(int)
     df["Cost"] = df["Cost"].astype(int)
+    df["HPP"] = df["HPP"].astype(int)
+    df["Sales"] = df["Sales"].astype(int)
 
 def grading(df):
     df['Grade'] = df[['Quality', 'Pas', 'Cost']].dot([0.4, 0.3, 0.3])
@@ -64,8 +66,9 @@ def solve_optimization(df,order,capacity):
     
     # Menampilkan hasil optimasi
     for i in range(len(pn)):
-        if pyo.value(pn[i]) > 1:
+        if pyo.value(pn[i]) > 0:
             st.write('<center><b><h3>Part Number: ', df.PN[i], '=', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
+
 
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
@@ -74,6 +77,7 @@ if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
         convert_df(df)
+        margin = lambda df: df.assign(Margin=df['Sales'] - df['HPP'])
         grading(df)
         st.write(df)  
     except Exception as e:
