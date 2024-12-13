@@ -8,10 +8,10 @@ import streamlit as st
 import sys
 
 # Membuat judul
-st.title('OPTIMIZATION ORDER')
+st.title('optimizing OPTIMIZING ORDER SELECTION')
 
 # Menambah subheader
-st.subheader('Selamat datang di aplikasi optimasi kuota order ke vendor subcon')
+st.subheader('')
 
 def upload_data():
     df = pd.read_excel('Part Number Order.xlsx')
