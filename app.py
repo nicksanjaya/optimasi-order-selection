@@ -93,7 +93,7 @@ if uploaded_file is not None:
         pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
     data = {
     'PN': df.PN,
-    'Qty': [pn_values[part] for part in df.PN]
+    'Qty': [pn_values[part.lower()] for part in df.PN]
     }
     order  = pd.DataFrame(data)
 
