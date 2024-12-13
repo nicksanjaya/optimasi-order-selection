@@ -19,14 +19,14 @@ def upload_data():
 
 def convert_df(df):
     # Check if necessary columns exist
-    required_columns = ['PN', 'Quality', 'Pas', 'Cost', 'HPP', 'Sales']
+    required_columns = ['PN', 'Quality', 'Production', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
             st.error(f"Missing required column: {col}")
             return
             
     df["Quality"] = df["Quality"].astype(int)
-    df["Pas"] = df["Pas"].astype(int)
+    df["Production"] = df["Production"].astype(int)
     df["Cost"] = df["Cost"].astype(int)
     df["HPP"] = df["HPP"].astype(int)
     df["Sales"] = df["Sales"].astype(int)
@@ -35,7 +35,7 @@ def margin(df):
     df['Margin'] = df['Sales'] - df['HPP']
 
 def grading(df):
-    df['Grade'] = df[['Quality', 'Pas', 'Cost']].dot([0.4, 0.3, 0.3])
+    df['Grade'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
 
 def solve_optimization(df,order,capacity):
     
@@ -88,7 +88,7 @@ if uploaded_file is not None:
         convert_df(df)
         margin(df)
         grading(df)
-        st.write(f'Bobot -> Quality: 40%, Pas: 30%, Cost: 30%')
+        st.write(f'Bobot -> Quality: 40%, Production: 30%, Cost: 30%')
         st.write(df)  
     except Exception as e:
         st.error(f"Error reading the Excel file: {e}")
