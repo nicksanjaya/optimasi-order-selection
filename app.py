@@ -30,6 +30,9 @@ def convert_df(df):
     df["Cost"] = df["Cost"].astype(int)
     df["HPP"] = df["HPP"].astype(int)
     df["Sales"] = df["Sales"].astype(int)
+    
+def margin(df):
+    df['Margin'] = df['Sales'] - df['HPP']
 
 def grading(df):
     df['Grade'] = df[['Quality', 'Pas', 'Cost']].dot([0.4, 0.3, 0.3])
@@ -77,7 +80,7 @@ if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
         convert_df(df)
-        margin = lambda df: df.assign(Margin=df['Sales'] - df['HPP'])
+        margin(df)
         grading(df)
         st.write(df)  
     except Exception as e:
