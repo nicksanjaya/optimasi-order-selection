@@ -64,8 +64,8 @@ def solve_optimization(df,order,capacity):
     
     # Menampilkan hasil optimasi
     for i in range(len(pn)):
-        st.write('<center><b><h3>Part Number: ', df.PN[i], '=', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
-
+        if pyo.value(pn[i]) > 1:
+            st.write('<center><b><h3>Part Number: ', df.PN[i], '=', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
 
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
