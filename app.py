@@ -8,7 +8,7 @@ import streamlit as st
 import sys
 
 # Membuat judul
-st.title('optimizing OPTIMIZING ORDER SELECTION')
+st.title('OPTIMIZING ORDER SELECTION')
 
 # Menambah subheader
 st.subheader('')
