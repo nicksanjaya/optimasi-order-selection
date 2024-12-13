@@ -68,10 +68,15 @@ def solve_optimization(df,order,capacity):
     st.markdown('---'*10)
     
     # Menampilkan hasil optimasi
+    margin = []
     for i in range(len(pn)):
+        value =  pyo.value(pn[i]) * df.margin[i]
+        margin.append(value)
         if pyo.value(pn[i]) > 0:
             st.write('<center><b><h3>Part Number: ', df.PN[i], '=', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
-
+            
+    total_margin = sum(margin)
+    st.write('<center><b><h3>Total Margin: =', pyo.value(pn[i]), '</b></h3>', unsafe_allow_html=True)
 
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
