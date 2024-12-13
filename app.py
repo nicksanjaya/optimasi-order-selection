@@ -91,6 +91,7 @@ if uploaded_file is not None:
         st.write(df)  
     except Exception as e:
         st.error(f"Error reading the Excel file: {e}")
+        break
         
     # Input box for capacity
     capacity = st.number_input("Enter Capacity:", min_value=0)
