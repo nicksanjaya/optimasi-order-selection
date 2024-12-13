@@ -45,7 +45,7 @@ def solve_optimization(df,order,capacity):
     
     # Fungsi pembatas
     pn_sum = sum([pn[indeks] for indeks in range(len(order.PN))])
-    model.balance = pyo.Constraint(expr = pn_sum == capacity)
+    model.balance = pyo.Constraint(expr = pn_sum <= capacity)
 
     model.limits = pyo.ConstraintList()
     for indeks in range(len(order.PN)):
