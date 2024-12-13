@@ -74,7 +74,7 @@ def solve_optimization(df,order,capacity):
         value =  part_value * df.Margin[i]
         margin.append(value)
         if pyo.value(pn[i]) > 0:
-            st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i])}</b></h3>', unsafe_allow_html=True)
+            st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]),.0f}</b></h3>', unsafe_allow_html=True)
             
     total_margin = sum(margin)
     st.write('<center><b><h3>Total Margin: =', total_margin, '</b></h3>', unsafe_allow_html=True)
