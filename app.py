@@ -35,7 +35,7 @@ def margin(df):
     df['Margin'] = df['Sales'] - df['HPP']
 
 def grading(df):
-    df['Grade'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
+    df['Rating'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
 
 def input_order(df):
     pn_values = {}
@@ -63,7 +63,7 @@ def solve_optimization(df,order,capacity):
         model.limits.add(expr = pn[indeks] <= order.Qty[indeks])
 
     # Fungsi tujuan
-    pn_sum_obj = sum([pn[indeks]*df.Grade[indeks] for indeks in range(len(df.PN))])
+    pn_sum_obj = sum([pn[indeks]*df.Rating[indeks] for indeks in range(len(df.PN))])
     model.obj = pyo.Objective(expr = pn_sum_obj, sense = maximize)
 
     opt = SolverFactory('glpk')
