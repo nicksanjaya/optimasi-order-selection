@@ -10,11 +10,6 @@ import sys
 # Membuat judul
 st.title('OPTIMIZING ORDER SELECTION')
 
-#Fungsi upload data
-def upload_data():
-    df = pd.read_excel('Part Number Order.xlsx')
-    return df
-
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
     required_columns = ['PN', 'Quality', 'Production', 'Cost', 'HPP', 'Sales']
