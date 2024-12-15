@@ -8,7 +8,7 @@ import streamlit as st
 import sys
 
 # Membuat judul
-st.title('OPTIMIZING ORDER SELECTION')
+st.title('OPTIMIZING SELECTION ORDER')
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
