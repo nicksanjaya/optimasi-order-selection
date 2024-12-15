@@ -37,7 +37,7 @@ def margin(df):
 def grading(df):
     df['Grade'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
 
-def innput_order(df):
+def input_order(df):
     pn_values = {}
     for part in df.PN:
         pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
