@@ -46,6 +46,7 @@ def input_order(df):
     'Qty': [pn_values[part.lower()] for part in df.PN]
     }
     order  = pd.DataFrame(data)
+    return order
 
 def solve_optimization(df,order,capacity):
     
