@@ -11,7 +11,7 @@ import sys
 st.title('OPTIMIZING ORDER SELECTION')
 
 # Menambah subheader
-st.subheader('')
+#st.subheader('')
 
 def upload_data():
     df = pd.read_excel('Part Number Order.xlsx')
@@ -36,6 +36,16 @@ def margin(df):
 
 def grading(df):
     df['Grade'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
+
+def innput_order(df):
+    pn_values = {}
+    for part in df.PN:
+        pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
+    data = {
+    'PN': df.PN,
+    'Qty': [pn_values[part.lower()] for part in df.PN]
+    }
+    order  = pd.DataFrame(data)
 
 def solve_optimization(df,order,capacity):
     
@@ -96,15 +106,7 @@ if uploaded_file is not None:
         
     # Input box for capacity
     capacity = st.number_input("Enter Capacity:", min_value=0)
-    pn_values = {}
-    for part in df.PN:
-        pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
-    data = {
-    'PN': df.PN,
-    'Qty': [pn_values[part.lower()] for part in df.PN]
-    }
-    order  = pd.DataFrame(data)
-
+    input_order(df)
 
     # Button to create schedule
     if st.button("Calculate"):
