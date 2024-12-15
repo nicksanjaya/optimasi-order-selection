@@ -41,10 +41,10 @@ def rating(df):
 def input_order(df):
     pn_values = {}
     for part in df.PN:
-        pn_values[part.lower()] = st.number_input(f"Enter Part Number {part}:", min_value=0)
+        pn_values[part] = st.number_input(f"Enter Part Number {part}:", min_value=0)
     data = {
     'PN': df.PN,
-    'Qty': [pn_values[part.lower()] for part in df.PN]
+    'Qty': [pn_values[part] for part in df.PN]
     }
     global order
     order  = pd.DataFrame(data)
