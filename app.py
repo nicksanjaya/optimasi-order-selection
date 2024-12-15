@@ -10,15 +10,13 @@ import sys
 # Membuat judul
 st.title('OPTIMIZING ORDER SELECTION')
 
-# Menambah subheader
-#st.subheader('')
-
+#Fungsi upload data
 def upload_data():
     df = pd.read_excel('Part Number Order.xlsx')
     return df
 
+# Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
-    # Check if necessary columns exist
     required_columns = ['PN', 'Quality', 'Production', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
@@ -30,13 +28,16 @@ def convert_df(df):
     df["Cost"] = df["Cost"].astype(int)
     df["HPP"] = df["HPP"].astype(int)
     df["Sales"] = df["Sales"].astype(int)
-    
+
+# Fungsi menghitung margin
 def margin(df):
     df['Margin'] = df['Sales'] - df['HPP']
 
-def grading(df):
+# Fungsi menghitung rating
+def rating(df):
     df['Rating'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
 
+#fungsi input order
 def input_order(df):
     pn_values = {}
     for part in df.PN:
@@ -47,7 +48,8 @@ def input_order(df):
     }
     global order
     order  = pd.DataFrame(data)
-    
+
+# Fungsi optimasi
 def solve_optimization(df,order,capacity):
     
     model = pyo.ConcreteModel()
@@ -93,23 +95,25 @@ def solve_optimization(df,order,capacity):
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
 
+# Upload excel
 if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
         convert_df(df)
         margin(df)
-        grading(df)
+        rating(df)
         st.write(f'Bobot -> Quality: 40%, Production: 30%, Cost: 30%')
         st.write(df)  
     except Exception as e:
         st.error(f"Error reading the Excel file: {e}")
         sys.exit()
         
-    # Input box for capacity
+    # Input capacity
     capacity = st.number_input("Enter Capacity:", min_value=0)
+    
     input_order(df)
 
-    # Button to create schedule
+    # Tombol ekskusi optimasi
     if st.button("Calculate"):
         try:
             solve_optimization(df,order,capacity)
