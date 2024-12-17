@@ -76,7 +76,7 @@ def solve_optimization(df,order,capacity):
     st.markdown('---'*10)
     
     # Menampilkan hasil optimasi
-    st.write(results.solver.termination_condition)
+    st.write(f'<center><b><h3>Solution: = {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     margin = []
     for i in range(len(pn)):
         part_value = pyo.value(pn[i])
