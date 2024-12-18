@@ -73,10 +73,10 @@ def solve_optimization(df,capacity):
     st.write(f'<center><b><h3>Solution: = {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     margin = []
     for i in range(len(pn)):
+        part_value = pyo.value(pn[i])
+        value =  part_value * df.Margin[i]
+        margin.append(value)
         if pyo.value(pn[i]) > 0:
-            part_value = pyo.value(pn[i])
-            value =  part_value * df.Margin[i]
-            margin.append(value)
             st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]):,.0f} pcs</b></h3>', unsafe_allow_html=True)
             
     total_margin = sum(margin)
