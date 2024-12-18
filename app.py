@@ -119,37 +119,37 @@ def solve_optimization(df,capacity):
         #file_name=file_name,
         #mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     #)
-
-# Menyisipkan CSS untuk menggeser tombol download ke kanan
-st.markdown(
-    """
-    <style>
-    .right-button {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-# Menampilkan tombol download di dalam elemen dengan kelas 'right-button'
-with st.container():
-    st.markdown('<div class="right-button">', unsafe_allow_html=True)
-    st.download_button(
-        label="Download Optimized Results (Excel)",
-        data=open("file_name.xlsx", 'rb').read(),  # Ganti dengan file yang sesuai
-        file_name="file_name.xlsx",  # Ganti dengan nama file yang sesuai
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    st.markdown('</div>', unsafe_allow_html=True)
     
-    st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
-
-    for i in range(len(pn)):
-        if pyo.value(pn[i]) > 0:
-            st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]):,.0f} pcs</b></h3>', unsafe_allow_html=True)
-            
-    st.write(f'<center><b><h3>Total Margin: {total_margin:,.0f} </b></h3>', unsafe_allow_html=True)
+    # Menyisipkan CSS untuk menggeser tombol download ke kanan
+    st.markdown(
+        """
+        <style>
+        .right-button {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    # Menampilkan tombol download di dalam elemen dengan kelas 'right-button'
+    with st.container():
+        st.markdown('<div class="right-button">', unsafe_allow_html=True)
+        st.download_button(
+            label="Download Optimized Results (Excel)",
+            data=open("file_name.xlsx", 'rb').read(),  # Ganti dengan file yang sesuai
+            file_name="file_name.xlsx",  # Ganti dengan nama file yang sesuai
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
+    
+        for i in range(len(pn)):
+            if pyo.value(pn[i]) > 0:
+                st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]):,.0f} pcs</b></h3>', unsafe_allow_html=True)
+                
+        st.write(f'<center><b><h3>Total Margin: {total_margin:,.0f} </b></h3>', unsafe_allow_html=True)
     
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
