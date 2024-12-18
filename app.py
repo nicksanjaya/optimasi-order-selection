@@ -106,4 +106,4 @@ if uploaded_file is not None:
         try:
             solve_optimization(df,capacity)
         #except Exception as e:
-            #st.error(f"Error : {e}")
+        #st.error(f"Error : {e}")
