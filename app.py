@@ -88,7 +88,10 @@ def solve_optimization(df,capacity):
         'Quantity (pcs)': [pyo.value(pn[i]) for i in range(len(pn))],
         'Margin Value': margin
     })
-    
+
+    # Menghapus baris dengan Quantity (pcs) = 0
+    result_df = result_df[result_df['Quantity (pcs)'] > 0]
+
     # Menambahkan total margin ke dalam DataFrame
     result_df.loc[len(result_df)] = ['Total Margin', None, total_margin]
 
