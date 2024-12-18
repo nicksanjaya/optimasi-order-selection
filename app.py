@@ -85,27 +85,14 @@ def solve_optimization(df,capacity):
     # Menambahkan garis pembatas
     st.markdown('---'*10)
     
-# Membuat tombol download untuk file Excel
-    file_name = ''
-    st.download_button(
-        label="Download Optimized Results (Excel)",
-        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
-        file_name=file_name,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    
     # Menampilkan hasil optimasi
-    st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     margin = []
     for i in range(len(pn)):
         part_value = pyo.value(pn[i])
         value =  part_value * df.Margin[i]
         margin.append(value)
-        if pyo.value(pn[i]) > 0:
-            st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]):,.0f} pcs</b></h3>', unsafe_allow_html=True)
             
     total_margin = sum(margin)
-    st.write(f'<center><b><h3>Total Margin: {total_margin:,.0f} </b></h3>', unsafe_allow_html=True)
 
     # Membuat DataFrame untuk hasil optimasi yang ingin diunduh
     result_df = pd.DataFrame({
@@ -132,6 +119,14 @@ def solve_optimization(df,capacity):
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+    
+    st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
+
+    for i in range(len(pn)):
+        if pyo.value(pn[i]) > 0:
+            st.write(f'<center><b><h3>Part Number: {df.PN[i]} = {pyo.value(pn[i]):,.0f} pcs</b></h3>', unsafe_allow_html=True)
+            
+    st.write(f'<center><b><h3>Total Margin: {total_margin:,.0f} </b></h3>', unsafe_allow_html=True)
     
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
