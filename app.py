@@ -115,12 +115,34 @@ def solve_optimization(df,capacity):
     result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
     # Membuat tombol download untuk file Excel
-    st.download_button(
-        label="Download Optimized Results (Excel)",
-        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
-        file_name=file_name,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    #st.download_button(
+        #label="Download Optimized Results (Excel)",
+        #data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        #file_name=file_name,
+        #mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    #)
+
+    # Menggunakan CSS untuk memindahkan tombol ke kanan
+    st.markdown("""
+        <style>
+        .download-btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # Membuat tombol download dengan class yang sudah diatur
+    with st.container():
+        st.markdown('<div class="download-btn-container">', unsafe_allow_html=True)
+        st.download_button(
+            label="Download Optimized Results (Excel)",
+            data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+            file_name=file_name,
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
     
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
