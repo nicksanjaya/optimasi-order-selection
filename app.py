@@ -14,7 +14,7 @@ st.title('OPTIMIZING ORDER SELECTION')
 
 def preprocessing(df):
     preprocessor = ColumnTransformer([
-        ('imputasi Order', SimpleImputer(strategy='constant', fill_value=0), ['Order'])],
+        ('imputasi Order', SimpleImputer(strategy='constant', fill_value=0), ['Promise'])],
         remainder='passthrough',
         verbose_feature_names_out=False
     )
