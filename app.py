@@ -10,6 +10,17 @@ import sys
 # Membuat judul
 st.title('OPTIMIZING ORDER SELECTION')
 
+def preprocessing(df):
+    preprocessor = ColumnTransformer([
+        ('imputasi Order', SimpleImputer(strategy='constant', fill_value=0), ['Order'])],
+        remainder='passthrough',
+        verbose_feature_names_out=False
+    )
+    preprocessor.fit(df)
+    df = preprocessor.transform(df)
+    df = pd.DataFrame(df, columns=preprocessor.get_feature_names_out())
+    return df
+
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
     required_columns = ['PN', 'Order','Promise','Quality', 'Production', 'Cost', 'HPP', 'Sales']
@@ -114,6 +125,7 @@ uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
 if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
+        preprocessing(df)
         convert_df(df)
         margin(df)
         rating(df)
