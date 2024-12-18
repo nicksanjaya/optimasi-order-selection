@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import sys
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
 
 # Membuat judul
 st.title('OPTIMIZING ORDER SELECTION')
