@@ -14,7 +14,7 @@ st.title('OPTIMIZING ORDER SELECTION')
 
 def preprocessing(df):
     preprocessor = ColumnTransformer([
-        ('imputasi Order', SimpleImputer(strategy='constant', fill_value=0), ['Promise'])],
+        ('imputasi Order', SimpleImputer(strategy='constant', fill_value=0), ['Promise Qty'])],
         remainder='passthrough',
         verbose_feature_names_out=False
     )
@@ -25,14 +25,14 @@ def preprocessing(df):
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
-    required_columns = ['PN', 'Order','Promise','Quality', 'Production', 'Cost', 'HPP', 'Sales']
+    required_columns = ['PN', 'Order','Promise Qty','Quality', 'Production', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
             st.error(f"Missing required column: {col}")
             return
 
     df["Order"] = df["Order"].astype(int)
-    df["Promise"] = df["Promise"].astype(int)        
+    df["Promise Qty"] = df["Promise Qty"].astype(int)        
     df["Quality"] = df["Quality"].astype(int)
     df["Production"] = df["Production"].astype(int)
     df["Cost"] = df["Cost"].astype(int)
@@ -49,6 +49,7 @@ def rating(df):
     
 # Fungsi optimasi
 def solve_optimization(df,capacity):
+    df = df.rename(columns={'Promise Qty': 'Promise'})
     
     model = pyo.ConcreteModel()
     model.Pn = pyo.Var(range(len(df.PN)), bounds=(0,None))
