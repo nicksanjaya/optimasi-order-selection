@@ -21,7 +21,7 @@ def preprocessing(df):
     preprocessor.fit(df)
     df = preprocessor.transform(df)
     df = pd.DataFrame(df, columns=preprocessor.get_feature_names_out())
-    #return df
+    return df
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
