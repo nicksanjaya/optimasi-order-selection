@@ -109,9 +109,6 @@ def solve_optimization(df,capacity):
     
     # Menambahkan total margin ke dalam DataFrame
     result_df_filter.loc[len(result_df)] = ['Total Margin', None, total_margin]   
-
-    st.write(len(result_df))
-    st.write(result_df_filter)
     
     # Menyimpan file Excel di disk sementara
     file_name = "optimized_results.xlsx"
@@ -124,7 +121,6 @@ def solve_optimization(df,capacity):
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
     
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
@@ -151,8 +147,8 @@ if uploaded_file is not None:
 
     # Tombol ekskusi optimasi
     if st.button("Calculate"):
-        #try:
-        solve_optimization(df,capacity)
-        #except Exception as e:
-        #st.error(f"Error : {e}")
+        try:
+            solve_optimization(df,capacity)
+        except Exception as e:
+            st.error(f"Error : {e}")
 
