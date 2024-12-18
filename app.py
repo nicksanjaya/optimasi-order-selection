@@ -115,7 +115,7 @@ def solve_optimization(df,capacity):
     
     # Menyimpan file Excel di disk sementara
     file_name = "optimized_results.xlsx"
-    result_df.to_excel(file_name, index=False, sheet_name='Optimization Results')
+    result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
     # Membuat tombol download untuk file Excel
     st.download_button(
