@@ -50,7 +50,8 @@ def rating(df):
 # Fungsi optimasi
 def solve_optimization(df,capacity):
     df = df.rename(columns={'Promise Qty': 'Promise'})
-    
+
+    # Variable
     model = pyo.ConcreteModel()
     model.Pn = pyo.Var(range(len(df.PN)), bounds=(0,None))
     pn = model.Pn
@@ -84,7 +85,7 @@ def solve_optimization(df,capacity):
     st.markdown('---'*10)
     
     # Menampilkan hasil optimasi
-    st.write(f'<center><b><h3>Solution: = {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
+    st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     margin = []
     for i in range(len(pn)):
         part_value = pyo.value(pn[i])
