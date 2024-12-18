@@ -12,12 +12,14 @@ st.title('OPTIMIZING ORDER SELECTION')
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
-    required_columns = ['PN', 'Quality', 'Production', 'Cost', 'HPP', 'Sales']
+    required_columns = ['PN', 'Order','Promise Qty','Quality', 'Production', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
             st.error(f"Missing required column: {col}")
             return
-            
+
+    df["Order"] = df["Order"].astype(int)
+    df["Promise"] = df["Promise"].astype(int)        
     df["Quality"] = df["Quality"].astype(int)
     df["Production"] = df["Production"].astype(int)
     df["Cost"] = df["Cost"].astype(int)
@@ -31,18 +33,6 @@ def margin(df):
 # Fungsi menghitung rating
 def rating(df):
     df['Rating'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
-
-#fungsi input order
-def input_order(df):
-    pn_values = {}
-    for part in df.PN:
-        pn_values[part] = st.number_input(f"Enter Quantity Part Number {part}:", min_value=0)
-    data = {
-    'PN': df.PN,
-    'Qty': [pn_values[part] for part in df.PN]
-    }
-    global order
-    order  = pd.DataFrame(data)
 
 # Fungsi optimasi
 def solve_optimization(df,order,capacity):
@@ -59,6 +49,10 @@ def solve_optimization(df,order,capacity):
     for indeks in range(len(order.PN)):
         model.limits.add(expr = pn[indeks] <= order.Qty[indeks])
 
+    model.min = pyo.ConstraintList()
+    for indeks in range(len(order.PN)):
+        model.min.add(expr = pn[indeks] => order.Promise[indeks])
+    
     # Fungsi tujuan
     pn_sum_obj = sum([pn[indeks]*df.Rating[indeks] for indeks in range(len(df.PN))])
     model.obj = pyo.Objective(expr = pn_sum_obj, sense = maximize)
@@ -98,6 +92,7 @@ if uploaded_file is not None:
         convert_df(df)
         margin(df)
         rating(df)
+        order = df["Order"]
         st.write(f'Bobot -> Quality: 40%, Production: 30%, Cost: 30%')
         st.write(df)  
     except Exception as e:
@@ -106,8 +101,6 @@ if uploaded_file is not None:
         
     # Input capacity
     capacity = st.number_input("Enter Capacity:", min_value=0)
-    
-    input_order(df)
 
     # Tombol ekskusi optimasi
     if st.button("Calculate"):
