@@ -112,7 +112,7 @@ def solve_optimization(df,capacity):
     result_df_filter.loc[len(result_df)] = ['Total Margin', None, total_margin]   
     
     # Menyimpan file Excel
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    current_time = datetime.now().strftime("%Y%m%d%H%M%S")
     file_name = f"optimized_results_{current_time}.xlsx"
     result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
