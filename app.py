@@ -33,25 +33,25 @@ def margin(df):
 # Fungsi menghitung rating
 def rating(df):
     df['Rating'] = df[['Quality', 'Production', 'Cost']].dot([0.4, 0.3, 0.3])
-
+    
 # Fungsi optimasi
-def solve_optimization(df,order,capacity):
+def solve_optimization(df,capacity):
     
     model = pyo.ConcreteModel()
     model.Pn = pyo.Var(range(len(df.PN)), bounds=(0,None))
     pn = model.Pn
     
     # Fungsi pembatas
-    pn_sum = sum([pn[indeks] for indeks in range(len(order.PN))])
+    pn_sum = sum([pn[indeks] for indeks in range(len(df.Order))])
     model.balance = pyo.Constraint(expr = pn_sum <= capacity)
 
     model.limits = pyo.ConstraintList()
-    for indeks in range(len(order.PN)):
-        model.limits.add(expr = pn[indeks] <= order.Qty[indeks])
+    for indeks in range(len(df.order)):
+        model.limits.add(expr = pn[indeks] <= df.Order[indeks])
 
     model.min = pyo.ConstraintList()
-    for indeks in range(len(order.PN)):
-        model.min.add(expr = pn[indeks] >= order.Promise[indeks])
+    for indeks in range(len(df.Order)):
+        model.min.add(expr = pn[indeks] >= df.Promise[indeks])
     
     # Fungsi tujuan
     pn_sum_obj = sum([pn[indeks]*df.Rating[indeks] for indeks in range(len(df.PN))])
@@ -92,7 +92,6 @@ if uploaded_file is not None:
         convert_df(df)
         margin(df)
         rating(df)
-        order = df["Order"]
         st.write(f'Bobot -> Quality: 40%, Production: 30%, Cost: 30%')
         st.write(df)  
     except Exception as e:
@@ -105,6 +104,6 @@ if uploaded_file is not None:
     # Tombol ekskusi optimasi
     if st.button("Calculate"):
         try:
-            solve_optimization(df,order,capacity)
+            solve_optimization(df,capacity)
         except Exception as e:
             st.error(f"Error : {e}")
