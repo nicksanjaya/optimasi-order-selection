@@ -104,6 +104,8 @@ def solve_optimization(df,capacity):
         'Margin Value': margin
     })
 
+    st.write(result_df)
+
     # Menghapus baris dengan Quantity (pcs) = 0
     result_df = result_df[result_df['Quantity (pcs)'] > 0]
 
