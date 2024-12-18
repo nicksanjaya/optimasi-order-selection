@@ -82,6 +82,20 @@ def solve_optimization(df,capacity):
     total_margin = sum(margin)
     st.write(f'<center><b><h3>Total Margin: {total_margin:,.0f} </b></h3>', unsafe_allow_html=True)
 
+    # Membuat DataFrame untuk hasil optimasi yang ingin diunduh
+    result_df = pd.DataFrame({
+        'Part Number': df.PN,
+        'Quantity (pcs)': [pyo.value(pn[i]) for i in range(len(pn))],
+        'Margin Value': margin
+    })
+    
+    # Menambahkan total margin ke dalam DataFrame
+    result_df.loc[len(result_df)] = ['Total Margin', None, total_margin]
+
+    # Menyimpan file Excel di disk sementara
+    file_name = "optimized_results.xlsx"
+    result_df.to_excel(file_name, index=False, sheet_name='Optimization Results')
+
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
 
@@ -107,3 +121,11 @@ if uploaded_file is not None:
         solve_optimization(df,capacity)
         #except Exception as e:
         #st.error(f"Error : {e}")
+
+    # Membuat tombol download untuk file Excel
+    st.download_button(
+        label="Download Optimized Results (Excel)",
+        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
