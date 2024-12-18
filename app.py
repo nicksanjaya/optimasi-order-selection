@@ -110,8 +110,9 @@ def solve_optimization(df,capacity):
     # Menambahkan total margin ke dalam DataFrame
     result_df_filter.loc[len(result_df)] = ['Total Margin', None, total_margin]   
     
-    # Menyimpan file Excel di disk sementara
-    file_name = "optimized_results.xlsx"
+    # Menyimpan file Excel
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    file_name = f"optimized_results_{current_time}.xlsx"
     result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
     # Membuat tombol download untuk file Excel
