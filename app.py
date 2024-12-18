@@ -103,7 +103,7 @@ if uploaded_file is not None:
 
     # Tombol ekskusi optimasi
     if st.button("Calculate"):
-        try:
-            solve_optimization(df,capacity)
+        #try:
+        solve_optimization(df,capacity)
         #except Exception as e:
         #st.error(f"Error : {e}")
