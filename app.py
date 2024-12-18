@@ -21,7 +21,7 @@ def preprocessing(df):
     preprocessor.fit(df)
     df = preprocessor.transform(df)
     df = pd.DataFrame(df, columns=preprocessor.get_feature_names_out())
-    return df
+    #return df
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
@@ -127,7 +127,7 @@ uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
 if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
-        preprocessing(df)
+        df = preprocessing(df)
         convert_df(df)
         margin(df)
         rating(df)
