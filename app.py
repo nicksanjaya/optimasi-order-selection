@@ -109,10 +109,11 @@ def solve_optimization(df,capacity):
     # Menghapus baris dengan Quantity (pcs) = 0
     result_df = result_df[result_df['Quantity (pcs)'] > 0]
 
-    st.write(result_df)
 
     # Menambahkan total margin ke dalam DataFrame
     result_df.loc[len(result_df)] = ['Total Margin', None, total_margin]
+    
+    st.write(result_df)
 
     # Menyimpan file Excel di disk sementara
     file_name = "optimized_results.xlsx"
