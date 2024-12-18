@@ -108,7 +108,7 @@ def solve_optimization(df,capacity):
     result_df = result_df[result_df['Quantity (pcs)'] > 0]
     
     # Menambahkan total margin ke dalam DataFrame
-    result_df.loc[len(result_df)+1] = ['Total Margin', None, total_margin]   
+    result_df.loc[len(result_df)+3] = ['Total Margin', None, total_margin]   
     
     st.write(result_df)
     
