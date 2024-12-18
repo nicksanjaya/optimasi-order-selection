@@ -51,7 +51,7 @@ def solve_optimization(df,order,capacity):
 
     model.min = pyo.ConstraintList()
     for indeks in range(len(order.PN)):
-        model.min.add(expr = pn[indeks] => order.Promise[indeks])
+        model.min.add(expr = pn[indeks] >= order.Promise[indeks])
     
     # Fungsi tujuan
     pn_sum_obj = sum([pn[indeks]*df.Rating[indeks] for indeks in range(len(df.PN))])
