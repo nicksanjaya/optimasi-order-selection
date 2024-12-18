@@ -85,6 +85,15 @@ def solve_optimization(df,capacity):
     # Menambahkan garis pembatas
     st.markdown('---'*10)
     
+# Membuat tombol download untuk file Excel
+    file_name = ''
+    st.download_button(
+        label="Download Optimized Results (Excel)",
+        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    
     # Menampilkan hasil optimasi
     st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     margin = []
@@ -117,12 +126,12 @@ def solve_optimization(df,capacity):
     result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
     # Membuat tombol download untuk file Excel
-    st.download_button(
-        label="Download Optimized Results (Excel)",
-        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
-        file_name=file_name,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    #st.download_button(
+        #label="Download Optimized Results (Excel)",
+        #data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        #file_name=file_name,
+        #mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    #)
     
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
