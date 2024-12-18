@@ -8,6 +8,7 @@ import streamlit as st
 import sys
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
+from datetime import datetime
 
 # Membuat judul
 st.title('OPTIMIZING ORDER SELECTION')
