@@ -95,6 +95,14 @@ def solve_optimization(df,capacity):
     # Menyimpan file Excel di disk sementara
     file_name = "optimized_results.xlsx"
     result_df.to_excel(file_name, index=False, sheet_name='Optimization Results')
+    
+    # Membuat tombol download untuk file Excel
+    st.download_button(
+        label="Download Optimized Results (Excel)",
+        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 # Upload Excel file
 uploaded_file = st.file_uploader("Upload Excel Master Data", type=["xlsx"])
@@ -122,10 +130,3 @@ if uploaded_file is not None:
         #except Exception as e:
         #st.error(f"Error : {e}")
 
-    # Membuat tombol download untuk file Excel
-    st.download_button(
-        label="Download Optimized Results (Excel)",
-        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
-        file_name=file_name,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
