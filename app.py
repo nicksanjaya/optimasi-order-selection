@@ -12,7 +12,7 @@ st.title('OPTIMIZING ORDER SELECTION')
 
 # Fungsi cek kolom requirement & convert data ke int
 def convert_df(df):
-    required_columns = ['PN', 'Order','Promise Qty','Quality', 'Production', 'Cost', 'HPP', 'Sales']
+    required_columns = ['PN', 'Order','Promise','Quality', 'Production', 'Cost', 'HPP', 'Sales']
     for col in required_columns:
         if col not in df.columns:
             st.error(f"Missing required column: {col}")
