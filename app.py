@@ -128,6 +128,9 @@ if uploaded_file is not None:
     try:
         df = pd.read_excel(uploaded_file)
         df = preprocessing(df)
+        cols = df.columns.tolist()
+        cols.insert(2, cols.pop(0))
+        df = df[cols]
         convert_df(df)
         margin(df)
         rating(df)
