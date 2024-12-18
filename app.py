@@ -113,34 +113,12 @@ def solve_optimization(df,capacity):
     result_df_filter.to_excel(file_name, index=False, sheet_name='Optimization Results')
     
     # Membuat tombol download untuk file Excel
-    #st.download_button(
-        #label="Download Optimized Results (Excel)",
-        #data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
-        #file_name=file_name,
-        #mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    #)
-
-    # Menyisipkan CSS untuk menggeser tombol download ke kanan
-    st.markdown(
-         """
-         <style>
-         .right-button {
-             display: flex;
-             justify-content: flex-end;
-             margin-top: 20px;
-         }
-         </style>
-         """, unsafe_allow_html=True)
-    
-    # Bungkus tombol download dengan div class "right-button"
-    st.markdown('<div class="right-button">', unsafe_allow_html=True)
     st.download_button(
-         label="Download Optimized Results (Excel)",
-         data=open(file_name, 'rb').read(),
-         file_name=file_name,
-         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        label="Download Optimized Results (Excel)",
+        data=open(file_name, 'rb').read(),  # Membaca file dan mengirimkan sebagai binary data
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-    st.markdown('</div>', unsafe_allow_html=True)
         
     st.write(f'<center><b><h3>Solution: {results.solver.termination_condition} </b></h3>', unsafe_allow_html=True)
     
